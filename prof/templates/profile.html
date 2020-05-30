@@ -3,10 +3,15 @@
 {% block content %}
 {{block.super}}
 {% include "navbar.html" %}
-{%for profiles in profile%}
- <h1>{{profiles.bio}}</h1>
+
+ <h1>{{profile.bio}}</h1>
  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    <img src="{{profiles.profile_pic.url}}" class="img-responsive" alt="Image">
+    <img src="{{profile.profile_pic.url}}" class="img-responsive" alt="Image">
+    <form method = "post" enctype="multipart/form-data"> 
+        {% csrf_token %} 
+        {% bootstrap_form form%}
+        <input type="submit" class="btn btn-success btn-lg" value="Post"> 
+    </form> 
   </div>
- {%endfor%}
+ 
 {% endblock %}
