@@ -27,3 +27,8 @@ class Image(models.Model):
 
     def __str__(self):
         return self.image_name
+
+    @classmethod
+    def get_all(cls):
+        images=cls.objects.all()
+        return images

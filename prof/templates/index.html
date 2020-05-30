@@ -4,5 +4,23 @@
 {{block.super}}
 {% include "navbar.html" %}
 {{user.username}}
+{{image}}
+<!-- Looping through news   -->
+{% for images in image %}
 
+<div class="row">
+  <!-- displaying News articles -->
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <h2 class="text-center"> {{ images.image_name }} </h2>-{{images.image_caption|safe}}
+    
+    
+  </div>
+
+</div>
+
+{% empty %}
+<div class="row">
+  <h2 class="text-center">There No Images</h2>
+</div>
+{% endfor %}
 {% endblock %}

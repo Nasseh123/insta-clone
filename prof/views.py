@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse 
 from django.contrib.auth.decorators import login_required
-from .models import Profile,User
+from .models import Profile,User,Image
 from .forms import ProfileForm,ImageForm
 
 # Create your views here..
@@ -10,8 +10,9 @@ from .forms import ProfileForm,ImageForm
 def index(request):
     user=request.user
     # print(user.username)
-    
-    return render(request,'index.html',{"user":user})
+    image=Image.get_all()
+
+    return render(request,'index.html',{"user":user,'image':image})
 
 def profile(request,user_id):
 
@@ -46,7 +47,7 @@ def new_image(request):
             image=form.save(commit=False)
             image.user=current_user
             image.save()
-        return redirect('success')
+        return redirect('index')
         
     else:
         form=ImageForm()
