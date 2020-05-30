@@ -1,1 +1,7 @@
-<h1>HOMEPAGE</h1>
+{%extends 'base.html'%}
+{% load bootstrap3 %}
+{% block content %}
+{{block.super}}
+{% include "navbar.html" %}
+
+{% endblock %}
