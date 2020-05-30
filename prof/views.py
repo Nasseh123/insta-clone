@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse 
 from django.contrib.auth.decorators import login_required
 from .models import Profile,User
-from .forms import ProfileForm
+from .forms import ProfileForm,ImageForm
 
 # Create your views here..
 
@@ -38,3 +38,16 @@ def profile(request,user_id):
 def success(request):
     return HttpResponse('successfully uploaded')
     
+def new_image(request):
+    current_user=request.user
+    if request.method=='POST':
+        form =ImageForm(request.POST,request.FILES)
+        if form.is_valid():
+            image=form.save(commit=False)
+            image.user=current_user
+            image.save()
+        return redirect('success')
+        
+    else:
+        form=ImageForm()
+    return render(request,'new_image.html',{'form':form})
