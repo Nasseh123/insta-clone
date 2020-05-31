@@ -55,14 +55,16 @@ def new_image(request):
 
 def searchuser(request):
 
-    if 'image_name' in request.GET and request.GET["image_name"]:
-        search_term = request.GET.get("image_name")
+    if 'searchuser' in request.GET and request.GET["searchuser"]:
+        search_term = request.GET.get("searchuser")
+        print(search_term)
         
-        searched_images = Article.get_all(search_term)
+        searched_user = User.objects.filter(username__icontains=search_term).all()
+        print(searched_user)
         message = f"{search_term}"
 
-        return render(request, 'all-news/search.html',{"message":message,"articles": searched_articles})
+        return render(request, 'search.html',{"message":message,"users": searched_user})
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'all-news/search.html',{"message":message})
+        return render(request, 'search.html',{"message":message})
