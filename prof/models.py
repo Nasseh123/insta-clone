@@ -32,3 +32,5 @@ class Image(models.Model):
     def get_all(cls):
         images=cls.objects.all()
         return images
+
+    

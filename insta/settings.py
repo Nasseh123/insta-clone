@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'prof.apps.ProfConfig',
-    'bootstrap3',
+    'bootstrap4',
     'tinymce',
 ]
 

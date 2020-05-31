@@ -1,17 +1,40 @@
 {%extends 'base.html'%}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 {% block content %}
 {{block.super}}
 {% include "navbar.html" %}
 {{user.username}}
-{{image}}
-<!-- Looping through news   -->
-{% for images in image %}
 
+<!-- Looping through images   -->
+{% for images in image %}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ images.user.username }}</h5>
+    
+  </div>
+  <img class="card-img-top" src="{{images.image.url}}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{ images.image_name }}</h5>
+    <p class="card-text">{{images.image_caption|safe}}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Cras justo odio</li>
+    <li class="list-group-item">Dapibus ac facilisis in</li>
+    <li class="list-group-item">Vestibulum at eros</li>
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+  <div class="card-footer text-muted">
+    2 days ago
+  </div>
+</div>
+  
 <div class="row">
   <!-- displaying News articles -->
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    <h2 class="text-center"> {{ images.image_name }} </h2>-{{images.image_caption|safe}}
+    <h2 class="text-center">  </h2>-
     
     
   </div>

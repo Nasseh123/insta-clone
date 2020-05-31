@@ -11,7 +11,7 @@ def index(request):
     user=request.user
     # print(user.username)
     image=Image.get_all()
-
+    # if 'name' request.method
     return render(request,'index.html',{"user":user,'image':image})
 
 def profile(request,user_id):
@@ -52,3 +52,17 @@ def new_image(request):
     else:
         form=ImageForm()
     return render(request,'new_image.html',{'form':form})
+
+def searchuser(request):
+
+    if 'image_name' in request.GET and request.GET["image_name"]:
+        search_term = request.GET.get("image_name")
+        
+        searched_images = Article.get_all(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'all-news/search.html',{"message":message,"articles": searched_articles})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'all-news/search.html',{"message":message})
