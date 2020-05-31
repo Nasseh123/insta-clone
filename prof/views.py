@@ -1,9 +1,11 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from .models import Profile,User,Image
 from .forms import ProfileForm,ImageForm
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # Create your views here..
 
 # @login_required(login_url='/accounts/login/')
@@ -90,16 +92,11 @@ def searchuser(request):
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
 
-# def registration(request):
-#     current_user=request.user
-#     if request.method=='POST':
-#         form =ImageForm(request.POST,request.FILES)
-#         if form.is_valid():
-#             image=form.save(commit=False)
-#             image.user=current_user
-#             image.save()
-#         return redirect('index')
-        
-#     else:
-#         form=ImageForm()
-#     return render(request,'new_image.html',{'form':form})
+@receiver(post_save,sender=User)
+def create_user_profile(sender,instance,created,**kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
