@@ -10,7 +10,8 @@ from .forms import ProfileForm,ImageForm
 def index(request):
     user=request.user
     # print(user.username)
-    image=Image.get_all()
+    # image=Image.get_all()
+    image=Image.get_specific(user.id)
     # if 'name' request.method
     return render(request,'index.html',{"user":user,'image':image})
 
@@ -57,14 +58,48 @@ def searchuser(request):
 
     if 'searchuser' in request.GET and request.GET["searchuser"]:
         search_term = request.GET.get("searchuser")
-        print(search_term)
+        # print(search_term)
         
         searched_user = User.objects.filter(username__icontains=search_term).all()
-        print(searched_user)
+        print(searched_user.values('id'))
+        
+        users_id=searched_user.values('id')
+        usersarray=[]
+        
+        for one in users_id:
+            usersarray.append(one['id'])
+        print(usersarray)
+         
+        searched_image=Profile.objects.filter(user__in=usersarray).all()
+        print(searched_image)
+        # print(users_id)
+        # listuser=list(users_id.values())
+        # print(listuser)
+        # current_user=request.user
+        # for users in users_id:
+        #     idS=listuser[:1]
+        #     print(id)
+            # 
+            # print(searched_image)s
+        # print(searched_user)
         message = f"{search_term}"
 
-        return render(request, 'search.html',{"message":message,"users": searched_user})
+        return render(request, 'search.html',{"message":message,"users": searched_user,'image':searched_image})
 
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
+
+# def registration(request):
+#     current_user=request.user
+#     if request.method=='POST':
+#         form =ImageForm(request.POST,request.FILES)
+#         if form.is_valid():
+#             image=form.save(commit=False)
+#             image.user=current_user
+#             image.save()
+#         return redirect('index')
+        
+#     else:
+#         form=ImageForm()
+#     return render(request,'new_image.html',{'form':form})

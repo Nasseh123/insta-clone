@@ -9,7 +9,7 @@ urlpatterns=[
     url('success',views.success, name = 'success'), 
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^new/image$',views.new_image,name='new_image'),
-    url(r'search/',views.searchuser ,name='searchuser')
+    url(r'^search/',views.searchuser ,name='searchuser')
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
