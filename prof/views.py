@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Profile,User,Image
-from .forms import ProfileForm,ImageForm
+from .forms import ProfileForm,ImageForm,CommentForm
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 # Create your views here..
@@ -11,7 +11,7 @@ from django.dispatch import receiver
 # @login_required(login_url='/accounts/login/')
 def index(request):
     user=request.user
-    # print(user.username)
+    # print(user.id)
     # image=Image.get_all()
     image=Image.get_specific(user.id)
     # if 'name' request.method
@@ -100,3 +100,20 @@ def create_user_profile(sender,instance,created,**kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+def new_comment(request):
+    current_user=request.user
+    
+    if request.method=='POST':
+        form =CommentForm(request.POST)
+        if form.is_valid():
+            comment=form.save(commit=False)
+            comment.user=current_user
+            comment.image=Image.objects.get(user=current_user.id)
+            
+            comment.save()
+        return redirect('index')
+        
+    else:
+        form=CommentForm()
+    return render(request,'new_comment.html',{'form':form})

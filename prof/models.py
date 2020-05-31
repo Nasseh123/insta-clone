@@ -37,5 +37,12 @@ class Image(models.Model):
     def get_specific(cls,user_id):
         image=cls.objects.filter(user=user_id)
         return image
+class comment(models.Model):
+    comment=HTMLField()
+    user=models.ForeignKey(User)
+    image=models.ForeignKey(Image)
 
+    def __str__(self):
+        return self.comment
+        
     
