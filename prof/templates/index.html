@@ -1,27 +1,42 @@
 {%extends 'base.html'%}
 {% load bootstrap4 %}
+
+{%block styles%}
+{%bootstrap_css%}
+<link rel="stylesheet" href="{static 'css/index.css'}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+  function myFunction(x) {
+    x.classList.toggle("fa-thumbs-down");
+  }
+  </script>
+{%endblock%}
+
 {% block content %}
 {{block.super}}
 {% include "navbar.html" %}
 {{user.username}}
-
+{{profilepic}}
+<div class="container">
 <!-- Looping through images   -->
 {% for images in image %}
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 35rem;">
   <div class="card-body">
+    <img src="{{images.profilepic.profile_pic}}" alt="{{ images.user.username }} profile image">
     <h5 class="card-title">{{ images.user.username }}</h5>
     
   </div>
+  
   <img class="card-img-top" src="{{images.image.url}}" alt="Card image cap">
+  <i onclick="myFunction(this)" class="fa fa-thumbs-up" style="text-align: center;"></i>
   <div class="card-body">
     <h5 class="card-title">{{ images.image_name }}</h5>
     <p class="card-text">{{images.image_caption|safe}}</p>
   </div>
   <ul class="list-group list-group-flush">
-    <a class="dropdown-item" href="{%url 'new_comment'%}">NEW_IMAGE</a>
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Vestibulum at eros</li>
+    <a class="dropdown-item" href="{%url 'new_comment' images_id=images.id %}">NEW_COMMENT{{images.id}}</a>
+    
+
   </ul>
   <div class="card-body">
     <a href="#" class="card-link">Card link</a>
@@ -35,20 +50,23 @@
 <div class="row">
   <!-- displaying News articles -->
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    <h2 class="text-center">  </h2>-
-    
-    
+    <h2 class="text-center">  </h2>-   
   </div>
-
 </div>
 
 {% empty %}
 <div class="row">
   <h2 class="text-center">There No Images</h2>
 </div>
+</div>
 {% endfor %}
 {% endblock %}
 {% block scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  function myFunction(x) {
+    x.classList.toggle("fa-thumbs-down");
+  }
+  </script>
 {% bootstrap_javascript %} 
 {% endblock%}

@@ -12,7 +12,8 @@ from django.dispatch import receiver
 def index(request):
     user=request.user
     
-    # print(user.id)
+    print(user.id)
+    profilepic=Profile.objects.filter(user=user)
     # image=Image.get_all()
     image=Image.get_specific(user.id)
    
@@ -28,7 +29,8 @@ def index(request):
         followers_array.append(one['follower_id'])
     print(followers_array)
     imagefollowed=Image.get_followed_image(followers_array)
-    return render(request,'index.html',{"user":user,'image':imagefollowed})
+
+    return render(request,'index.html',{"user":user,'image':imagefollowed,'profilepic':profilepic})
 
 def profile(request,user_id):
 
@@ -115,15 +117,26 @@ def create_user_profile(sender,instance,created,**kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
-def new_comment(request):
+def new_comment(request,images_id):
     current_user=request.user
-    
+    print(images_id)
+    imageds=Image.objects.get(id=images_id)
+    print(imageds.id)
+    ima=imageds.id
+    # imageds_id=imageds.values('user_id')
+    # print(imageds_id)
+        
+    # for one in imageds_id:
+    #     imageds_value=one['user_id']
+    #     print( imageds_value)
+    # ids=imageds_value
+
     if request.method=='POST':
         form =CommentForm(request.POST)
         if form.is_valid():
             comment=form.save(commit=False)
             comment.user=current_user
-            comment.image=Image.objects.get(user=current_user.id)
+            comment.image=Image.objects.get(id=ima)
             
             comment.save()
         return redirect('index')
@@ -135,6 +148,7 @@ def new_comment(request):
 
 def usersimages(request):
     current_user_id=request.user
+    
     print(current_user_id)
     if(request.GET.get('mybtn')):
         follow= request.GET.get("mytextbox")

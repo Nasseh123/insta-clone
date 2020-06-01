@@ -7,7 +7,8 @@ class Profile(models.Model):
     bio=models.CharField(max_length =100,blank=True)
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     def __str__(self):
-        return self.bio
+        return self.user.username 
+        
 
     @classmethod
     def get_profile(cls,user_id):
@@ -41,6 +42,7 @@ class Image(models.Model):
     def get_followed_image(cls,followers_array):
         images=cls.objects.filter(user__in=followers_array)
         return images
+
 class comment(models.Model):
     comment=HTMLField()
     user=models.ForeignKey(User)
