@@ -37,6 +37,10 @@ class Image(models.Model):
     def get_specific(cls,user_id):
         image=cls.objects.filter(user=user_id)
         return image
+    @classmethod
+    def get_followed_image(cls,followers_array):
+        images=cls.objects.filter(user__in=followers_array)
+        return images
 class comment(models.Model):
     comment=HTMLField()
     user=models.ForeignKey(User)
@@ -49,4 +53,5 @@ class Follow(models.Model):
     follower_id=models.IntegerField(blank=True)
     user_id=models.ForeignKey(User,blank=True)
     
-    
+    def __str__(self):
+        return self.user_id.username   

@@ -18,8 +18,17 @@ def index(request):
    
     # if 'name' request.method
     
-
-    return render(request,'index.html',{"user":user,'image':image})
+    followers=Follow.objects.filter(user_id=user.id)
+    print(followers)
+    followers_id=followers.values('follower_id')
+    print(followers_id)
+    followers_array=[user.id]
+    
+    for one in followers_id:
+        followers_array.append(one['follower_id'])
+    print(followers_array)
+    imagefollowed=Image.get_followed_image(followers_array)
+    return render(request,'index.html',{"user":user,'image':imagefollowed})
 
 def profile(request,user_id):
 
