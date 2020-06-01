@@ -8,11 +8,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 # Create your views here..
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def index(request):
     user=request.user
     
-    print(user.id)
+    # print(user.id)
     profilepic=Profile.objects.filter(user=user)
     # image=Image.get_all()
     image=Image.get_specific(user.id)
@@ -20,20 +20,37 @@ def index(request):
     # if 'name' request.method
     
     followers=Follow.objects.filter(user_id=user.id)
-    print(followers)
+    # print(followers)
     followers_id=followers.values('follower_id')
-    print(followers_id)
+    # print(followers_id)
     followers_array=[user.id]
     
     for one in followers_id:
         followers_array.append(one['follower_id'])
-    print(followers_array)
+    # print(followers_array)
     imagefollowed=Image.get_followed_image(followers_array)
+    
+    # ***********************************************************COMMENTS**********************************************************************8
+    # h = Holder()
+    # if('comments' in request.GET):
+    #     idd= request.GET.get("comments_image_id")
+    #     print(idd)
+    #     comments=comment.get_comments(idd)
+    #     print(comments)
+    #     for commentss in comments.values('comment'):
+    #         print(commentss)
+    #         comentds=commentss['comment']
+    #         print(comentds)
+                
+       
+        
 
-    return render(request,'index.html',{"user":user,'image':imagefollowed,'profilepic':profilepic})
 
+    return render(request,'index.html',{"user":user,'image':imagefollowed,'profilepic':profilepic,})
+
+@login_required(login_url='/accounts/login/')
 def profile(request,user_id):
-
+    
     profile=Profile.get_profile(user_id)
     prof_pic=profile.profile_pic
     # print(prof_pic)
@@ -52,11 +69,15 @@ def profile(request,user_id):
         
     else:
         form=ProfileForm()
+        # ********************************************************8
+    
+
     return render(request,'profile.html',{'profile':profile,'form':ProfileForm})
 
 def success(request):
     return HttpResponse('successfully uploaded')
-    
+
+@login_required(login_url='/accounts/login/')    
 def new_image(request):
     current_user=request.user
     if request.method=='POST':
@@ -71,6 +92,7 @@ def new_image(request):
         form=ImageForm()
     return render(request,'new_image.html',{'form':form})
 
+@login_required(login_url='/accounts/login/')
 def searchuser(request):
 
     if 'searchuser' in request.GET and request.GET["searchuser"]:
@@ -107,12 +129,13 @@ def searchuser(request):
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
     
-   
+@login_required(login_url='/accounts/login/')
 @receiver(post_save,sender=User)
 def create_user_profile(sender,instance,created,**kwargs):
     if created:
         Profile.objects.create(user=instance)
 
+@login_required(login_url='/accounts/login/')
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
@@ -145,7 +168,7 @@ def new_comment(request,images_id):
         form=CommentForm()
     return render(request,'new_comment.html',{'form':form})
 
-
+@login_required(login_url='/accounts/login/')
 def usersimages(request):
     current_user_id=request.user
     

@@ -5,6 +5,9 @@
 {%bootstrap_css%}
 <link rel="stylesheet" href="{static 'css/index.css'}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
   function myFunction(x) {
     x.classList.toggle("fa-thumbs-down");
@@ -16,7 +19,7 @@
 {{block.super}}
 {% include "navbar.html" %}
 {{user.username}}
-{{profilepic}}
+
 <div class="container">
 <!-- Looping through images   -->
 {% for images in image %}
@@ -34,8 +37,42 @@
     <p class="card-text">{{images.image_caption|safe}}</p>
   </div>
   <ul class="list-group list-group-flush">
-    <a class="dropdown-item" href="{%url 'new_comment' images_id=images.id %}">NEW_COMMENT{{images.id}}</a>
+    <a class="btn btn-info btn-lg" href="{%url 'new_comment' images_id=images.id %}">NEW_COMMENT{{images.id}}</a>
+
+    <!-- modal -->
     
+    <form>
+      <button type="button" class="" data-toggle="modal" data-target="#myModal" name="comments" >Open Modal</button>
+      <input  class="btn btn-info btn-lg" type="submit"value="OOOOOPPEN" name="comments"  >
+      <input type="text" value="{{images.id}}" name="comments_image_id"  size="1"/>
+    </form>
+    
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">comments</h4>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>
+                {%for comment in comments%}
+                <p>{{comment}}</p>
+                {%endfor%}
+              </li>
+              
+            </ul>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
 
   </ul>
   <div class="card-body">
