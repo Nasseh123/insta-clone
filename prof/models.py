@@ -44,5 +44,9 @@ class comment(models.Model):
 
     def __str__(self):
         return self.comment
-        
+
+class Follow(models.Model):
+    follower_id=models.IntegerField(blank=True)
+    user_id=models.ForeignKey(User,blank=True)
+    
     

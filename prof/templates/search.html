@@ -3,6 +3,7 @@
 {% block content %}
 {{block.super}}
 {% include "navbar.html" %}
+<h1>{{message}}</h1>
 {%for one in image%}
 
 <img src="{{one.profile_pic}}" alt="">
@@ -21,9 +22,17 @@
       {% endfor %}
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">{{user.username}}</h5>
+          <h5 class="card-title">{{user.username}}-{{user.id}}</h5>
           <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
           <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          
+          <form  action="{%url 'usersimages' %}" method="GET">
+            <input type="text" value="{{user.id}}" name="mytextbox" hidden size="1"/>
+            <input  class="btn btn-outline-success my-2 my-sm-0" type="submit"value="Click" name="mybtn" >
+            
+            
+           </form>
+
         </div>
       </div>
     </div>
