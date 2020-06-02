@@ -33,17 +33,17 @@ def index(request):
     # ***********************************************************COMMENTS**********************************************************************8
     comentdsd=[]
     
-    if('comments' in request.GET):
-        idd= request.GET.get("comments_image_id")
-        print(idd)
-        comments=comment.get_comments(idd)
-        print(comments)
-        for commentss in comments.values('comment'):
-            print(commentss)
-            comentds=commentss['comment']
-            print(comentds)
-            comentdsd.append(comentds)
-            print(comentdsd)
+    # if('comments' in request.GET):
+    idd= request.GET.get("comments_image_id")
+    print(idd)
+    comments=comment.get_comments(idd)
+    print(comments)
+    for commentss in comments.values('comment'):
+        print(commentss)
+        comentds=commentss['comment']
+        print(comentds)
+        comentdsd.append(comentds)
+        print(comentdsd)
        
         
 
