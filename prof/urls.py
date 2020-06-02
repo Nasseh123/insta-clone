@@ -11,7 +11,8 @@ urlpatterns=[
     url(r'^new/image$',views.new_image,name='new_image'),
     url(r'^search/',views.searchuser ,name='searchuser'),
     url(r'^new/comment/(?P<images_id>(\d+))',views.new_comment,name='new_comment'),
-    url(r'^follow/',views.usersimages,name='usersimages')
+    url(r'^follow/',views.usersimages,name='usersimages'),
+    url(r'^comments/',views.index,name='comments')
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

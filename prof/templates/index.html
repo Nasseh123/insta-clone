@@ -1,18 +1,27 @@
 {%extends 'base.html'%}
 {% load bootstrap4 %}
-
+{% load static%}
 {%block styles%}
 {%bootstrap_css%}
-<link rel="stylesheet" href="{static 'css/index.css'}">
+<link rel="stylesheet" href="{%static 'css/index.css'%}">
+<script src="{%static 'js/search.js'%}"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
   function myFunction(x) {
     x.classList.toggle("fa-thumbs-down");
   }
+ 
+  $('#modalform').submit(function (e) {
+    e.preventDefault();
+    
+   });
   </script>
+
 {%endblock%}
 
 {% block content %}
@@ -23,14 +32,14 @@
 <div class="container">
 <!-- Looping through images   -->
 {% for images in image %}
-<div class="card" style="width: 35rem;">
+<div class="card" style="width: 45rem;">
   <div class="card-body">
     <img src="{{images.profilepic.profile_pic}}" alt="{{ images.user.username }} profile image">
     <h5 class="card-title">{{ images.user.username }}</h5>
     
   </div>
   
-  <img class="card-img-top" src="{{images.image.url}}" alt="Card image cap">
+  <img class="img-thumbnail img " src="{{images.image.url}}" alt="Card image cap">
   <i onclick="myFunction(this)" class="fa fa-thumbs-up" style="text-align: center;"></i>
   <div class="card-body">
     <h5 class="card-title">{{ images.image_name }}</h5>
@@ -41,10 +50,10 @@
 
     <!-- modal -->
     
-    <form>
-      <button type="button" class="" data-toggle="modal" data-target="#myModal" name="comments" >Open Modal</button>
-      <input  class="btn btn-info btn-lg" type="submit"value="OOOOOPPEN" name="comments"  >
-      <input type="text" value="{{images.id}}" name="comments_image_id"  size="1"/>
+    <form >
+      <button class="btn btn-info btn-lg"  data-toggle="modal" data-target="#myModal" type="button" >Comments</button>
+      <input   class="btn btn-info btn-lg"  type="submit" value="View Comments" name="comments"  />
+      <input type="text" value="{{images.id}}" name="comments_image_id" hidden size="1"/>
     </form>
     
     <div class="modal fade" id="myModal" role="dialog">
@@ -57,12 +66,13 @@
           </div>
           <div class="modal-body">
             <ul>
+              {%for comment in comentdsd%}
               <li>
-                {%for comment in comments%}
-                <p>{{comment}}</p>
-                {%endfor%}
+                
+                <p>{{comment|safe}}</p>
+                
               </li>
-              
+              {%endfor%}
             </ul>
             
           </div>
@@ -105,5 +115,15 @@
     x.classList.toggle("fa-thumbs-down");
   }
   </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+  
+  $('#modalform').submit(function (e) {
+      
+    });
+</script>
+
 {% bootstrap_javascript %} 
 {% endblock%}

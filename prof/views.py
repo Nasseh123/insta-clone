@@ -31,22 +31,24 @@ def index(request):
     imagefollowed=Image.get_followed_image(followers_array)
     
     # ***********************************************************COMMENTS**********************************************************************8
-    # h = Holder()
-    # if('comments' in request.GET):
-    #     idd= request.GET.get("comments_image_id")
-    #     print(idd)
-    #     comments=comment.get_comments(idd)
-    #     print(comments)
-    #     for commentss in comments.values('comment'):
-    #         print(commentss)
-    #         comentds=commentss['comment']
-    #         print(comentds)
-                
+    comentdsd=[]
+    
+    if('comments' in request.GET):
+        idd= request.GET.get("comments_image_id")
+        print(idd)
+        comments=comment.get_comments(idd)
+        print(comments)
+        for commentss in comments.values('comment'):
+            print(commentss)
+            comentds=commentss['comment']
+            print(comentds)
+            comentdsd.append(comentds)
+            print(comentdsd)
        
         
 
 
-    return render(request,'index.html',{"user":user,'image':imagefollowed,'profilepic':profilepic,})
+    return render(request,'index.html',{"user":user,'image':imagefollowed,'profilepic':profilepic,'comentdsd':comentdsd})
 
 @login_required(login_url='/accounts/login/')
 def profile(request,user_id):
@@ -129,13 +131,13 @@ def searchuser(request):
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
     
-@login_required(login_url='/accounts/login/')
+
 @receiver(post_save,sender=User)
 def create_user_profile(sender,instance,created,**kwargs):
     if created:
         Profile.objects.create(user=instance)
 
-@login_required(login_url='/accounts/login/')
+
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
