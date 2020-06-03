@@ -12,7 +12,8 @@ urlpatterns=[
     url(r'^search/',views.searchuser ,name='searchuser'),
     url(r'^new/comment/(?P<images_id>(\d+))',views.new_comment,name='new_comment'),
     url(r'^follow/',views.usersimages,name='usersimages'),
-    url(r'^comments/',views.index,name='comments')
+    url(r'^comments/',views.index,name='comments'),
+    url(r'^userprofile/(?P<user_id>(\d+))',views.userspublicprofile,name='userspublicprofile'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

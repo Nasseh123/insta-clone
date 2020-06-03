@@ -191,7 +191,9 @@ def usersimages(request):
         else:
             followupdate=Follow.objects.create(follower_id = follow,user_id =current_user_id )
             followupdate.save()
-            images=Image.objects.filter(user_id=follow).all()
-            print(images)
-            return render(request, 'usersprofile.html',{'image':images})
-
+    return redirect( 'index.html')
+def userspublicprofile(request,user_id):
+    print(user_id)
+    images=Image.objects.filter(user=user_id)
+    
+    return render(request, 'usersprofile.html',{'image':images})
