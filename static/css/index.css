@@ -1,3 +1,12 @@
-img{
+.img{
+    float: left;
     border-radius: 50%;
+    height: 60px;
+    width: 60px;
+}
+.imgs{
+    float: left;
+    border-radius: 50%;
+    height: 160px;
+    width: 160px;
 }

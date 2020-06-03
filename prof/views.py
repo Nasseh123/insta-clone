@@ -14,8 +14,11 @@ def index(request):
     
     # print(user.id)
     profilepic=Profile.objects.filter(user=user)
+    print(profilepic)
+    pr=User.objects.filter(profile__user_id=1)
+    print(pr)
     # image=Image.get_all()
-    image=Image.get_specific(user.id)
+    # image=Image.get_specific(user.id)
    
     # if 'name' request.method
     
@@ -35,20 +38,20 @@ def index(request):
     
     # if('comments' in request.GET):
     idd= request.GET.get("comments_image_id")
-    print(idd)
+    # print(idd)
     comments=comment.get_comments(idd)
-    print(comments)
+    # print(comments)
     for commentss in comments.values('comment'):
-        print(commentss)
+        # print(commentss)
         comentds=commentss['comment']
-        print(comentds)
+        # print(comentds)
         comentdsd.append(comentds)
-        print(comentdsd)
+        # print(comentdsd)
        
         
 
 
-    return render(request,'index.html',{"user":user,'image':imagefollowed,'profilepic':profilepic,'comentdsd':comentdsd})
+    return render(request,'index.html',{"user":user,'image':imagefollowed,'profilepic':profilepic,'comentdsd':comentdsd,'pr':pr})
 
 @login_required(login_url='/accounts/login/')
 def profile(request,user_id):
@@ -82,11 +85,14 @@ def success(request):
 @login_required(login_url='/accounts/login/')    
 def new_image(request):
     current_user=request.user
+    profileid=Profile.objects.get(user=current_user.id)
+    print(profileid)
     if request.method=='POST':
         form =ImageForm(request.POST,request.FILES)
         if form.is_valid():
             image=form.save(commit=False)
             image.user=current_user
+            image.profile=profileid
             image.save()
         return redirect('index')
         

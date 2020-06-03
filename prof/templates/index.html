@@ -31,15 +31,22 @@
 
 <div class="container">
 <!-- Looping through images   -->
-{% for images in image %}
+<!-- {%for p in pr%}
+{{p.profile.profile_pic.url}}
+<img src="{{p.profile.profile_pic.url}}" alt="{{ images.user.username }} profile image">
+{%endfor%}-->
+{% for images in image %} 
+
 <div class="card" style="width: 45rem;">
   <div class="card-body">
-    <img src="{{images.profilepic.profile_pic}}" alt="{{ images.user.username }} profile image">
-    <h5 class="card-title">{{ images.user.username }}</h5>
+    
+    <img class='img' src="{{images.profile.profile_pic.url}}" alt="{{ images.user.username }} profile image">    <h5 class="card-title">{{ images.user.username }}</h5>
+
+    
     
   </div>
   
-  <img class="img-thumbnail img " src="{{images.image.url}}" alt="Card image cap">
+  <img class="img-thumbnail  " src="{{images.image.url}}" alt="Card image cap">
   <i onclick="myFunction(this)" class="fa fa-thumbs-up" style="text-align: center;"></i>
   <div class="card-body">
     <h5 class="card-title">{{ images.image_name }}</h5>
@@ -91,7 +98,7 @@
     <a href="#" class="card-link">Another link</a>
   </div>
   <div class="card-footer text-muted">
-    2 days ago
+    <p>Posted-On:{{images.pub_time}}</p>
   </div>
 </div>
   
@@ -108,6 +115,7 @@
 </div>
 </div>
 {% endfor %}
+
 {% endblock %}
 {% block scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

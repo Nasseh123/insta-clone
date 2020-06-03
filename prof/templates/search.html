@@ -15,23 +15,18 @@
 {% block content %}
 {{block.super}}
 {% include "navbar.html" %}
-<h1>{{message}}</h1>
-{%for one in image%}
- 
-<img src="{{one.profile_pic}}" alt="">
-{% endfor %}
+
+
+
 {%for user in users%}
 <div class="card mb-3" style="max-width: 540px;">
     <div class="row no-gutters">
-        {%for one in image%}
-        {%if one.profile_pic%}
+      
       <div class="col-md-4">
-        <img src="{{one.profile_pic.url}}" class="card-img" alt="...">
+        <img src="{{user.profile.profile_pic.url}}" class="card-img" alt="...">
       </div>
-      {%else%}
-      <p>no pic</p>
-      {% endif %}
-      {% endfor %}
+      
+      
       <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title">{{user.username}}-{{user.id}}</h5>
@@ -47,9 +42,12 @@
       </div>
     </div>
   </div>
-
+  {% empty %}
+  <h1>There is no user with name:{{message}}</h1>
 
   {% endfor %}
+  
+
   {% endblock %}
   {% block scripts %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
