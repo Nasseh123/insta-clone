@@ -6,17 +6,20 @@ from .models import Profile,User,Image,comment,Follow
 from .forms import ProfileForm,ImageForm,CommentForm
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.template.response import TemplateResponse
 # Create your views here..
-
+comentdsd=[]
+comentdsd.clear()
 @login_required(login_url='/accounts/login/')
 def index(request):
+    print("herererere")
     user=request.user
     
     # print(user.id)
-    profilepic=Profile.objects.filter(user=user)
+    profilepic=Profile.objects.get(user=user.id )
     print(profilepic)
     pr=User.objects.filter(profile__user_id=1)
-    print(pr)
+    # print(pr)
     # image=Image.get_all()
     # image=Image.get_specific(user.id)
    
@@ -32,26 +35,26 @@ def index(request):
         followers_array.append(one['follower_id'])
     # print(followers_array)
     imagefollowed=Image.get_followed_image(followers_array)
-    
     # ***********************************************************COMMENTS**********************************************************************8
-    comentdsd=[]
-    
-    # if('comments' in request.GET):
+  
     idd= request.GET.get("comments_image_id")
-    # print(idd)
-    comments=comment.get_comments(idd)
-    # print(comments)
-    for commentss in comments.values('comment'):
-        # print(commentss)
-        comentds=commentss['comment']
-        # print(comentds)
-        comentdsd.append(comentds)
-        # print(comentdsd)
-       
-        
+    print(idd)
+    #FORM FOR NEW COMMENT
+    form =CommentForm(request.POST)
+    
+    context={
+        "user":user,
+        'image':imagefollowed,
+        'profilepic':profilepic,
+        'pr':pr,
+        'form':form
+        }       
 
-
-    return render(request,'index.html',{"user":user,'image':imagefollowed,'profilepic':profilepic,'comentdsd':comentdsd,'pr':pr})
+    
+        # return redirect('commentsmodal',id=idd)
+    if request.POST:
+         return redirect('index/?comments-id=',images_id=10)
+    return render(request,'index.html',context)
 
 @login_required(login_url='/accounts/login/')
 def profile(request,user_id):
@@ -103,6 +106,8 @@ def new_image(request):
 @login_required(login_url='/accounts/login/')
 def searchuser(request):
 
+    user=request.user
+    
     if 'searchuser' in request.GET and request.GET["searchuser"]:
         search_term = request.GET.get("searchuser")
         # print(search_term)
@@ -130,8 +135,8 @@ def searchuser(request):
             # print(searched_image)s
         # print(searched_user)
         message = f"{search_term}"
-
-        return render(request, 'search.html',{"message":message,"users": searched_user,'image':searched_image})
+        profilepic=Profile.objects.get(user=user.id )
+        return render(request, 'search.html',{"message":message,"users": searched_user,'image':searched_image,'profilepic':profilepic})
 
     else:
         message = "You haven't searched for any term"
@@ -150,18 +155,9 @@ def save_user_profile(sender, instance, **kwargs):
 
 def new_comment(request,images_id):
     current_user=request.user
-    print(images_id)
-    imageds=Image.objects.get(id=images_id)
-    print(imageds.id)
-    ima=imageds.id
-    # imageds_id=imageds.values('user_id')
-    # print(imageds_id)
-        
-    # for one in imageds_id:
-    #     imageds_value=one['user_id']
-    #     print( imageds_value)
-    # ids=imageds_value
 
+    imageds=Image.objects.get(id=images_id)
+    ima=imageds.id
     if request.method=='POST':
         form =CommentForm(request.POST)
         if form.is_valid():
@@ -197,3 +193,17 @@ def userspublicprofile(request,user_id):
     images=Image.objects.filter(user=user_id)
     
     return render(request, 'usersprofile.html',{'image':images})
+
+def commentsmodal(request,comments_image_id):
+    # comentdsd.clear()
+    comentdsd=[]
+    comentdsd.clear()
+    print(comments_image_id)
+    comments=comment.get_comments(comments_image_id)
+    
+    for commentss in comments.values('comment'):
+        comentds=commentss['comment']
+        comentdsd.append(comentds)
+
+    return render(request,'commentsmodal.html',{'comentdsd':comentdsd})
+    

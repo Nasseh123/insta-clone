@@ -46,7 +46,7 @@ class Image(models.Model):
         return images
 
 class comment(models.Model):
-    comment=HTMLField()
+    comment=models.CharField(max_length=50)
     user=models.ForeignKey(User)
     image=models.ForeignKey(Image)
 
