@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns=[
     url('^$',views.index,name='index'),
-    url(r'^/(?P<comments_image_id>(\d+))$',views.commentsmodal,name='commentsmodal'),
+    url(r'^comments/(?P<comments_image_id>(\d+))$',views.commentsmodal,name='commentsmodal'),
     #  url(r'^/(?P<comments_image_id>)',views.commentsmodal,name='commentsmodal'),
     url(r'^profile/(?P<user_id>(\d+))',views.profile,name='profile'),
     url('success',views.success, name = 'success'), 
@@ -14,7 +14,6 @@ urlpatterns=[
     url(r'^search/',views.searchuser ,name='searchuser'),
     url(r'^new/comment/(?P<images_id>(\d+))',views.new_comment,name='new_comment'),
     url(r'^follow/',views.usersimages,name='usersimages'),
-    url(r'^comments/',views.index,name='comments'),
     url(r'^userprofile/(?P<user_id>(\d+))',views.userspublicprofile,name='userspublicprofile')
 ]
 if settings.DEBUG:

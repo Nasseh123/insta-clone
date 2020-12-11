@@ -40,7 +40,7 @@ def index(request):
     idd= request.GET.get("comments_image_id")
     print(idd)
     #FORM FOR NEW COMMENT
-    form =CommentForm(request.POST)
+    form =CommentForm()
     
     context={
         "user":user,
@@ -155,7 +155,9 @@ def save_user_profile(sender, instance, **kwargs):
 
 def new_comment(request,images_id):
     current_user=request.user
-
+    print(request)
+    for i in request:
+        print(i)
     imageds=Image.objects.get(id=images_id)
     ima=imageds.id
     if request.method=='POST':

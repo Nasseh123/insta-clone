@@ -89,8 +89,14 @@
           <p class="card-text"></p>
         </div>
         <div>
-          <input type="text" class="sH9wk" placeholder="Add a comment...">
-         
+          <!-- <input type="text" class="sH9wk" placeholder="Add a comment..."> -->
+          <form   method="post" action="{%url 'new_comment' images_id=images.id %}" enctype="multipart/form-data">
+            {%csrf_token%}
+        
+            {% bootstrap_form form%}
+            
+    
+          </form>
         </div>
        
         <ul class="list-group list-group-flush">
