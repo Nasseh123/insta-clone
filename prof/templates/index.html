@@ -87,7 +87,7 @@
              View all {{images.comment_set.count}} comments</a>
 
           {%endif%}
-          <p class="r8ZrO cccc">
+          <p class=" cccc">
             {{images.pub_time}}</p>
             <form   method="post" action="{%url 'new_comment' images_id=images.id %}" enctype="multipart/form-data">
               {%csrf_token%}

@@ -6,25 +6,25 @@
     <div class=" d-none d-lg-block col-md-2 col-lg-2"></div>
     <div class=" col-sm-12 col-md-6 col-lg-6"> 
     <a class="navbar-brand"> INSTA-CLONE</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+
+     
         <!-- ***********AUTHENTICATED USER**************** -->
         {% if user.is_authenticated %}
+    
         
-        <li class="nav-item _8-yf5" style="float: right;">
           <form class="form-inline my-2 my-lg-0"  role="search" action="{%url 'searchuser' %}">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search Name" aria-label="Search" name="searchuser">
+            <input class="form-control mr-sm-2 d-block" type="text" placeholder="Search Name" aria-label="Search" name="searchuser">
             <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>   -->
           </form>
-        </li>
+        
         {% else %}
-        <li>
+      
           <a class='btn btn-default' href="/accounts/login">Login</a>
-        </li>
+     
         {% endif %}
-      </ul>
+     
    
-    </div>
+
     </div>
     
     <div class="_47KiJ">
@@ -55,9 +55,9 @@
           <a class="dropdown-item" href="{%url 'new_image'%}">NEW_IMAGE</a>
           
           <a class="dropdown-item" href="/accounts/password/change">Change Password</a>
-          <a class="dropdown-item" href="/logout">LOGOUT</a>
+    
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item" href="/logout">LOGOUT</a>
         </div>
         
       </li>
