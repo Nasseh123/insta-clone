@@ -11,16 +11,23 @@
             </div>
             <div class="modal-body">
               <ul>
+                {%if comentdsd %}
                 {%for comment in comentdsd%}
-                <li>
-                  <p>{{comment|safe}}</p>
-                </li>
+                  <li id="comentsKill">
+                    <p>{{comment|safe}}</p>
+                  </li>
+               
+                
+                
                 {% empty %}
                     <div class="row">
                       <h2 class="text-center">There No comments</h2>
                       </div>
                     </div>
                 {%endfor%}
+                {%else %}
+                <p>Loading...</p>
+                {%endif%}
               </ul>
           
             <div class="modal-footer">

@@ -7,6 +7,7 @@ from .forms import ProfileForm,ImageForm,CommentForm
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template.response import TemplateResponse
+import time
 # Create your views here..
 comentdsd=[]
 comentdsd.clear()
@@ -198,11 +199,12 @@ def userspublicprofile(request,user_id):
 
 def commentsmodal(request,comments_image_id):
     # comentdsd.clear()
+    
     comentdsd=[]
     comentdsd.clear()
     print(comments_image_id)
     comments=comment.get_comments(comments_image_id)
-    
+    # time.sleep(2)
     for commentss in comments.values('comment'):
         comentds=commentss['comment']
         comentdsd.append(comentds)

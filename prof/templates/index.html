@@ -80,40 +80,28 @@
         <div class="card-body cc">
            <!-- modal button-->
           {%if images.comment_set.count > 0 %}
-            <a class="r8ZrO" data-toggle="modal" data-target="#myModal"
+            <a class="cur r8ZrO" data-toggle="modal" data-target="#myModal"
             href="{%url 'commentsmodal' comments_image_id=images.id %}"
+            onclick="commentsKil()"
             >
              View all {{images.comment_set.count}} comments</a>
 
           {%endif%}
-          <p class="card-text"></p>
-        </div>
-        <div>
-          <!-- <input type="text" class="sH9wk" placeholder="Add a comment..."> -->
-          <form   method="post" action="{%url 'new_comment' images_id=images.id %}" enctype="multipart/form-data">
-            {%csrf_token%}
-        
-            {% bootstrap_form form%}
-            
-    
-          </form>
-        </div>
-       
-        <ul class="list-group list-group-flush">
-          <a
-            class="btn btn-info btn-lg"
-            href="{%url 'new_comment' images_id=images.id %}"
-            >NEW_COMMENT{{images.id}}</a
-          >
-    
-        
+          <p class="r8ZrO cccc">
+            {{images.pub_time}}</p>
+            <form   method="post" action="{%url 'new_comment' images_id=images.id %}" enctype="multipart/form-data">
+              {%csrf_token%}
           
-        </ul>
-    
-        <div class="card-footer text-muted">
-          <p>Posted-On:{{images.pub_time}}</p>
+              {% bootstrap_form form%}
+              
+      
+            </form>
         </div>
+
       </div>
+          <!-- <input type="text" class="sH9wk" placeholder="Add a comment..."> -->
+          
+         
       {% empty %}
       <div class="row">
         <h2 class="text-center">There No Images</h2>
@@ -138,7 +126,4 @@
     
 
   
-{% endblock %} {% block scripts %}
-
-
-{% endblock%}
+{% endblock %}
